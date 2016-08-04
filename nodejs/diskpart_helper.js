@@ -6,7 +6,6 @@ var path = require('path');
 var fsPlus = require('fs-plus');
 var async = require('async');
 
-
 exports.getTempScriptPath = function() {
   var currentTime, tempDirectory;
   currentTime = new Date().getTime();
@@ -30,6 +29,7 @@ exports.runScript = function(scriptPath, callback) {
   if (scriptPath == null) {
     throw new Error('Missing diskpart script path');
   }
+
   return async.waterfall([
     function(callback) {
       return fs.exists(scriptPath, function(exists) {
@@ -49,7 +49,7 @@ exports.runScript = function(scriptPath, callback) {
       }
       return callback();
     }, function(callback) {
-      return exports.execute("diskpart /s " + scriptPath, callback);
+      return exports.execute("diskpart /s \"" + scriptPath + "\"", callback);
     }, function(output, callback) {
       return setTimeout(function() {
         return callback(null, output);
@@ -59,14 +59,16 @@ exports.runScript = function(scriptPath, callback) {
 };
 
 exports.evaluate = function(input, callback) {
-  var scriptFilePath;
   if (input == null) {
     throw new Error('Diskpart missing input');
   }
   if (!_.isArray(input)) {
     throw new Error('Diskpart input should be an array of commands');
   }
-  scriptFilePath = exports.getTempScriptPath();
+
+  var scriptFilePath = exports.getTempScriptPath();
+  scriptFilePath = scriptFilePath.replaceAll("\\", "\\\\");
+
   return async.waterfall([
     function(callback) {
       return fs.writeFile(scriptFilePath, input.join('\n'), callback);
@@ -81,4 +83,10 @@ exports.evaluate = function(input, callback) {
       });
     }
   ], callback);
+};
+
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
 };
