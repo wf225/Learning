@@ -1,0 +1,1444 @@
+{
+    "Variables":
+    {
+        "FQDN":"<Instance.FQDN>",
+        "Ip":"<Instance.Ip>",
+        "NodeName":"<Instance.Name>-<Instance.Id>",
+        "RegionUSWest":"ECS-USWEST",
+        "RegionSHA":"ECS-APSHA",
+        "Env":"acadci_production_us",
+        "Sshpass":"-sshpass",
+        "Scanscsi":"-scsiscan",
+        "winpass":"-winpass",
+        "-NOCOLOR":"--no-color",
+        "ChefClient":"--bootstrap-version 12.8.1 -y <-NOCOLOR>",
+        "-NodeName":"-N <NodeName>",
+        "-Env":"-E <Env>",
+        "-TAG":"-t <Env>",
+        "-User":"-x administrator",
+        "-Pwd":"-P Qwertyuiop0",
+        "sudo":"--sudo --use-sudo-password",
+        "MonitorRecipe":"-r role[monitoring]",
+        "MasterRecipe":"-r 'recipe[apt]','role[rabbitmq_server]','role[buildbot_master]','role[nagios_client]'",
+        "SlaveRecipe":"-r 'recipe[acadci_workarounds::ecs_volume_attach]','role[buildbot_slave]','role[nagios_client]'",
+        "MacSlaveRecipe":"-r 'recipe[slave_env]','recipe[acadci_workarounds::ecs_volume_attach_mac]','role[buildbot_slave]','role[nagios_client]'",
+        "StorageRecipe":"-r 'role[storage_server],'role[nagios_client]'",
+        "AdminRecipe":"-r 'role[acadci_admin]'",
+        "BuildcoreRecipe":"-r 'recipe[apt]','role[buildcore]','role[nagios_client]'",
+        "MongodbServerRecipe":"-r 'recipe[apt]','role[acadci_mongodb]','role[nagios_client]'",
+        "FullBuildAttri":"-j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"fullbuild\"],\"root\":\"E:\/CI\"}}'",
+        "SMTestAttri":"-j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"smalltest\", \"mediumtest\"],\"root\":\"E:\/CI\"}}'",
+        "SMTestAttri_GPU":"-j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"smalltest\", \"mediumtest\"],\"with_gpu\":true,\"root\":\"E:\/CI\"}}'",
+        "LargeTestAttri":"-j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"largetest\"],\"root\":\"E:\/CI\"}}'",
+        "LargeTestAttri_GPU":"-j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"largetest\"],\"with_gpu\":true,\"root\":\"E:\/CI\"}}'",
+        "MasterAttri":"-j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"master\"],\"root\":\"E:\/CI\"}}'"
+    },
+    "Instances":
+    {
+        "nagios-server":
+        {
+            "Name":"acadci-nagios",
+            "Id":"014973eb",
+            "Ip":"10.41.8.25",
+            "FQDN":"ecs-014973eb.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-nagios <-TAG> <Sshpass> <Scanscsi>"
+        },
+        "droplocation1":
+        {
+            "Name":"ACADCI-STORAGE",
+            "Id":"81d3b0c6",
+            "Ip":"10.41.82.71",
+            "FQDN":"ecs-81d3b0c6.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-storage <-TAG> <winpass>"
+        },
+        "droplocation2":
+        {
+            "Name":"ACADCI-STORAGE",
+            "Id":"e4170766",
+            "Ip":"10.41.92.16",
+            "FQDN":"ecs-e4170766.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-storage <-TAG> <winpass>"
+        },
+        "droplocation3":
+        {
+            "Name":"ACADCI-STORAGE",
+            "Id":"add582ee",
+            "Ip":"10.41.8.196",
+            "FQDN":"ecs-add582ee.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-storage <-TAG> <winpass>"
+        },
+        "droplocation4":
+        {
+            "Name":"ACADCI-STORAGE",
+            "Id":"b7949f6f",
+            "Ip":"10.41.9.89",
+            "FQDN":"ecs-b7949f6f.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-storage <-TAG> <winpass>"
+        },
+        "droplocation5":
+        {
+            "Name":"ACADCI-STORAGE",
+            "Id":"8f03b351",
+            "Ip":"10.148.168.189",
+            "FQDN":"ecs-8f03b351.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-storage <-TAG> <winpass> -r <RegionSHA>"
+        },
+        "buildbot-master":
+        {
+            "Name":"ACADCI-BUILDBOT-MASTER",
+            "Id":"659b856d",
+            "Ip":"10.41.89.99",
+            "FQDN":"ecs-659b856d.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-buildbot-master <-TAG> <Sshpass> <Scanscsi>"
+        },
+        "buildcore":
+        {
+            "Name":"ACADCI-BUILDCORE",
+            "Id":"9687fd51",
+            "Ip":"10.41.82.235",
+            "FQDN":"ecs-9687fd51.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-buildcore <-TAG> <Sshpass> <Scanscsi>"
+        },
+        "inc-main-1":
+        {
+            "Name":"ACADCI-INC-WIN10-MAIN",
+            "Id":"7dddca8e",
+            "Ip":"10.41.90.194",
+            "FQDN":"ecs-7dddca8e.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi main <-TAG> <winpass>"
+        },
+        "inc-ob-1":
+        {
+            "Name":"ACADCI-INC-WIN10-OB",
+            "Id":"f71dcef2",
+            "Ip":"10.35.237.244",
+            "FQDN":"ecs-f71dcef2.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi ob <-TAG> <winpass>"
+        },
+        "inc-ob-2":
+        {
+            "Name":"ACADCI-INC-WIN10-OB",
+            "Id":"64b64f42",
+            "Ip":"10.41.8.249",
+            "FQDN":"ecs-64b64f42.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi ob <-TAG> <winpass>"
+        },
+        "inc-ob-3":
+        {
+            "Name":"ACADCI-INC-WIN10-OB",
+            "Id":"65cd1a4b",
+            "Ip":"10.41.83.237",
+            "FQDN":"ecs-65cd1a4b.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi ob <-TAG> <winpass>"
+        },
+        "inc-ob-prod-x86":
+        {
+            "Name":"acadci-inc-win10-ob-prod-x86",
+            "Id":"af7320ef",
+            "Ip":"10.41.8.90",
+            "FQDN":"ecs-af7320ef.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi ob-prod-x86 -t <Env>"
+        },
+        "inc-oe-1":
+        {
+            "Name":"ACADCI-INC-WIN10-OE",
+            "Id":"b28d3d2e",
+            "Ip":"10.35.234.211",
+            "FQDN":"ecs-b28d3d2e.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi oe <-TAG> <winpass>"
+        },
+        "inc-oh-1":
+        {
+            "Name":"ACADCI-INC-WIN10-OH",
+            "Id":"4775d12d",
+            "Ip":"10.41.81.249",
+            "FQDN":"ecs-4775d12d.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi oh <-TAG> <winpass>"
+        },
+        "inc-od-1":
+        {
+            "Name":"acadci-inc-win10-od",
+            "Id":"73391403",
+            "Ip":"10.35.235.75",
+            "FQDN":"ecs-73391403.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi od <-TAG> <winpass>"
+        },
+        "inc-of-1":
+        {
+            "Name":"acadci-inc-win10-of",
+            "Id":"495df7a6",
+            "Ip":"10.41.8.188",
+            "FQDN":"ecs-495df7a6.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi of <-TAG> <winpass>"
+        },
+        "inc-og-1":
+        {
+            "Name":"acadci-inc-win10-og",
+            "Id":"b14f5806",
+            "Ip":"10.41.92.147",
+            "FQDN":"ecs-b14f5806.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10-v5 -mi og <-TAG> <winpass>"
+        },
+        "inc-ok-1":
+        {
+            "Name":"acadci-inc-win10-ok",
+            "Id":"e7af8e0d",
+            "Ip":"10.41.85.53",
+            "FQDN":"ecs-e7af8e0d.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi ok <-TAG> <winpass>"
+        },
+        "inc-om-1":
+        {
+            "Name":"acadci-inc-win10-om",
+            "Id":"66f7dfa2",
+            "Ip":"10.41.93.152",
+            "FQDN":"ecs-66f7dfa2.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10-v5 -mi om <-TAG> <winpass>"
+        },
+        "inc-oc-1":
+        {
+            "Name":"acadci-inc-win10-oc",
+            "Id":"79339d2a",
+            "Ip":"10.35.237.160",
+            "FQDN":"ecs-79339d2a.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10-v5 -mi oc <-TAG> <winpass>"
+        },
+        "inc-oz-1":
+        {
+            "Name":"acadci-inc-win10-oz",
+            "Id":"9d558f8a",
+            "Ip":"10.41.82.199",
+            "FQDN":"ecs-9d558f8a.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10-v5 -mi oz <-TAG> <winpass>"
+        },
+        "inc-ox-1":
+        {
+            "Name":"acadci-inc-win10-ox",
+            "Id":"60451228",
+            "Ip":"10.41.83.136",
+            "FQDN":"ecs-60451228.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi ox <-TAG> <winpass>"
+        },
+        "inc-ox-prod-x86":
+        {
+            "Name":"acadci-inc-win10-ox-prod-x86",
+            "Id":"32563194",
+            "Ip":"10.41.8.39",
+            "FQDN":"ecs-32563194.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi ox-prod-x86 -t <Env>"
+        },
+        "inc-FusDoc-1":
+        {
+            "Name":"acadci-inc-win10-FusDoc",
+            "Id":"30abe0af",
+            "Ip":"10.41.8.190",
+            "FQDN":"ecs-30abe0af.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10-v3 -mi FusDoc <-TAG> <winpass>"
+        },
+        "inc-NPostFCS-FB-G":
+        {
+            "Name":"acadci-inc-win10-NPostFCS-G",
+            "Id":"108649f4",
+            "Ip":"10.41.92.176",
+            "FQDN":"ecs-108649f4.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10-v3 -mi NPostFCS-G <-TAG> <winpass>"
+        },
+        "inc-NPostFCS-FB-P":
+        {
+            "Name":"ACADCI-INC-WIN10-NPOSTFCS-P",
+            "Id":"ff4d726f",
+            "Ip":"10.41.90.114",
+            "FQDN":"ecs-ff4d726f.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi NPostFCS-P <-TAG> <winpass>"
+        },
+        "inc-NPostFCS-FB-H":
+        {
+            "Name":"acadci-inc-win10-NPostFCS-H",
+            "Id":"d22138b4",
+            "Ip":"10.41.84.67",
+            "FQDN":"ecs-d22138b4.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10-v3 -mi NPostFCS-H <-TAG> <winpass>"
+        },
+        "inc-NPostFCS-SP1":
+        {
+            "Name":"acadci-inc-win10-NPostFCS-SP1",
+            "Id":"9ebd586f",
+            "Ip":"10.41.89.173",
+            "FQDN":"ecs-9ebd586f.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10-v3 -mi NPostFCS-SP1 <-TAG> <winpass>"
+        },
+        "inc-N2017":
+        {
+            "Name":"acadci-inc-win10-N2017",
+            "Id":"e6a83e91",
+            "Ip":"10.35.237.84",
+            "FQDN":"ecs-e6a83e91.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10-v4 -mi N2017 <-TAG> <winpass>"
+        },
+        "inc-macmain-1":
+        {
+            "Name":"ACADCI-INC-WIN10-MACMAIN",
+            "Id":"c9e669de",
+            "Ip":"10.41.82.216",
+            "FQDN":"ecs-c9e669de.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi macmain <-TAG> <winpass>"
+        },
+        "inc-MM-1":
+        {
+            "Name":"ACADCI-INC-WIN10-MM",
+            "Id":"bd0c0d0f",
+            "Ip":"10.41.94.80",
+            "FQDN":"ecs-bd0c0d0f.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi MM <-TAG> <winpass>"
+        },
+        "inc-FusDocStage-1":
+        {
+            "Name":"acadci-inc-win10-FusDocStage",
+            "Id":"1a9c9f74",
+            "Ip":"10.41.84.17",
+            "FQDN":"ecs-1a9c9f74.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-inc-win10 -mi FusDocStage <-TAG> <winpass>"
+        },
+        "full-1":
+        {
+            "Name":"ACADCI-FULL-WIN10",
+            "Id":"f521acef",
+            "Ip":"10.41.88.230",
+            "FQDN":"ecs-f521acef.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-full-win10 <-TAG> <winpass>"
+        },
+        "full-2":
+        {
+            "Name":"ACADCI-FULL-WIN10",
+            "Id":"849ffcaf",
+            "Ip":"10.35.147.124",
+            "FQDN":"ecs-849ffcaf.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-full-win10 <-TAG> <winpass>"
+        },
+        "full-3":
+        {
+            "Name":"ACADCI-FULL-WIN10",
+            "Id":"d448cdcf",
+            "Ip":"10.41.94.83",
+            "FQDN":"ecs-d448cdcf.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-full-win10 <-TAG> <winpass>"
+        },
+        "full-4":
+        {
+            "Name":"ACADCI-FULL-WIN10",
+            "Id":"212d6093",
+            "Ip":"10.41.81.242",
+            "FQDN":"ecs-212d6093.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-full-win10 <-TAG> <winpass>"
+        },
+        "full-5":
+        {
+            "Name":"ACADCI-FULL-WIN10",
+            "Id":"750de5fe",
+            "Ip":"10.41.87.112",
+            "FQDN":"ecs-750de5fe.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-full-win10 <-TAG> <winpass>"
+        },
+        "master-1":
+        {
+            "Name":"ACADCI-MASTER",
+            "Id":"7fa372c5",
+            "Ip":"10.41.90.39",
+            "FQDN":"ecs-7fa372c5.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-full-win10 -ma acadci-master <-TAG> <winpass>"
+        },
+        "master-2":
+        {
+            "Name":"ACADCI-MASTER",
+            "Id":"6a293ca7",
+            "Ip":"10.41.91.204",
+            "FQDN":"ecs-6a293ca7.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-full-win10 -ma acadci-master <-TAG> <winpass>"
+        },
+        "master-3":
+        {
+            "Name":"ACADCI-MASTER",
+            "Id":"c9df1775",
+            "Ip":"10.41.80.242",
+            "FQDN":"ecs-c9df1775.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-full-win10 -ma acadci-master <-TAG> <winpass>"
+        },
+        "master-4":
+        {
+            "Name":"ACADCI-MASTER",
+            "Id":"3176af1f",
+            "Ip":"10.41.88.144",
+            "FQDN":"ecs-3176af1f.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-full-win10 -ma acadci-master <-TAG> <winpass>"
+        },
+        "master-5":
+        {
+            "Name":"ACADCI-MASTER",
+            "Id":"2b206358",
+            "Ip":"10.41.88.99",
+            "FQDN":"ecs-2b206358.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-full-win10 -ma acadci-master <-TAG> <winpass>"
+        },
+        "mac-build-100":
+        {
+            "Name":"ACADCI-MAC-BUILD",
+            "Id":"e30ci100",
+            "Ip":"10.148.224.167",
+            "FQDN":"ci100.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-build-101":
+        {
+            "Name":"ACADCI-MAC-BUILD",
+            "Id":"e30ci101",
+            "Ip":"10.148.224.217",
+            "FQDN":"ci101.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-build-102":
+        {
+            "Name":"ACADCI-MAC-BUILD",
+            "Id":"e30ci102",
+            "Ip":"10.148.225.170",
+            "FQDN":"ci102.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-build-103":
+        {
+            "Name":"ACADCI-MAC-BUILD",
+            "Id":"e30ci103",
+            "Ip":"10.148.224.173",
+            "FQDN":"ci103.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-001":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci001",
+            "Ip":"10.148.224.135",
+            "FQDN":"ci001.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-002":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci002",
+            "Ip":"10.148.224.141",
+            "FQDN":"ci002.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-003":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci003",
+            "Ip":"10.148.224.143",
+            "FQDN":"ci003.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-004":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci004",
+            "Ip":"10.148.224.146",
+            "FQDN":"ci004.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-005":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci005",
+            "Ip":"10.148.224.177",
+            "FQDN":"ci005.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-006":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci006",
+            "Ip":"10.148.224.179",
+            "FQDN":"ci006.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-007":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci007",
+            "Ip":"10.148.224.181",
+            "FQDN":"ci007.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-008":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci008",
+            "Ip":"10.148.224.185",
+            "FQDN":"ci008.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-009":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci009",
+            "Ip":"10.148.224.219",
+            "FQDN":"ci009.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-010":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci010",
+            "Ip":"10.148.224.215",
+            "FQDN":"ci010.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-011":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci011",
+            "Ip":"10.148.224.216",
+            "FQDN":"ci011.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-012":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci012",
+            "Ip":"10.148.224.202",
+            "FQDN":"ci012.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-013":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci013",
+            "Ip":"10.148.225.176",
+            "FQDN":"ci013.ads.autodesk.com",
+            "Command":""
+        },
+        "mac-test-014":
+        {
+            "Name":"ACADCI-MAC-TEST",
+            "Id":"306ci014",
+            "Ip":"10.148.224.190",
+            "FQDN":"ci014.ads.autodesk.com",
+            "Command":""
+        },
+        "mongodb-1":
+        {
+            "Name":"ACADCI-MONGODB",
+            "Id":"25e430c4",
+            "Ip":"10.41.93.174",
+            "FQDN":"ecs-25e430c4.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-mongodb -ma acadci-mongodb <-TAG> <Sshpass> <Scanscsi>"
+        },
+        "mongodb-2":
+        {
+            "Name":"ACADCI-MONGODB",
+            "Id":"1aa4f1da",
+            "Ip":"10.41.87.125",
+            "FQDN":"ecs-1aa4f1da.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-mongodb -ma acadci-mongodb <-TAG> <Sshpass> <Scanscsi>"
+        },
+        "mongodb-3":
+        {
+            "Name":"ACADCI-MONGODB",
+            "Id":"e8d7f133",
+            "Ip":"10.41.85.93",
+            "FQDN":"ecs-e8d7f133.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-mongodb -ma acadci-mongodb <-TAG> <Sshpass> <Scanscsi>"
+        },
+        "admin-1":
+        {
+            "Name":"ACADCI-ADMIN",
+            "Id":"418827ce",
+            "Ip":"10.41.89.246",
+            "FQDN":"ecs-418827ce.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-admin <-TAG> <Sshpass> <Scanscsi>"
+        },
+        "Test-sm-1":
+        {
+            "Name":"ACADCI-TEST-SM",
+            "Id":"8b234342",
+            "Ip":"10.41.95.106",
+            "FQDN":"ecs-8b234342.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-2":
+        {
+            "Name":"ACADCI-TEST-SM",
+            "Id":"0e5f42e0",
+            "Ip":"10.35.148.123",
+            "FQDN":"ecs-0e5f42e0.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-3":
+        {
+            "Name":"ACADCI-TEST-SM",
+            "Id":"88c79b09",
+            "Ip":"10.41.86.74",
+            "FQDN":"ecs-88c79b09.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-4":
+        {
+            "Name":"ACADCI-TEST-SM",
+            "Id":"a3ac4af8",
+            "Ip":"10.41.95.97",
+            "FQDN":"ecs-a3ac4af8.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-5":
+        {
+            "Name":"ACADCI-TEST-SM",
+            "Id":"23d082b7",
+            "Ip":"10.41.85.91",
+            "FQDN":"ecs-23d082b7.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-6":
+        {
+            "Name":"acadci-test-sm",
+            "Id":"a07c7070",
+            "Ip":"10.41.82.47",
+            "FQDN":"ecs-a07c7070.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-7":
+        {
+            "Name":"acadci-test-sm",
+            "Id":"b12d5ba0",
+            "Ip":"10.41.94.99",
+            "FQDN":"ecs-b12d5ba0.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-8":
+        {
+            "Name":"acadci-test-sm",
+            "Id":"1430f4f0",
+            "Ip":"10.41.85.216",
+            "FQDN":"ecs-1430f4f0.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-9":
+        {
+            "Name":"acadci-test-sm",
+            "Id":"cd33f648",
+            "Ip":"10.41.96.232",
+            "FQDN":"ecs-cd33f648.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-10":
+        {
+            "Name":"acadci-test-sm",
+            "Id":"65753d30",
+            "Ip":"10.41.80.232",
+            "FQDN":"ecs-65753d30.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-11":
+        {
+            "Name":"acadci-test-sm",
+            "Id":"e42e9188",
+            "Ip":"10.41.9.195",
+            "FQDN":"ecs-e42e9188.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-12":
+        {
+            "Name":"acadci-test-sm",
+            "Id":"0728efa0",
+            "Ip":"10.41.91.236",
+            "FQDN":"ecs-0728efa0.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi sm <-TAG> <winpass>"
+        },
+        "Test-sm-gpu-1":
+        {
+            "Name":"ACADCI-TEST-SM-GPU",
+            "Id":"9671eeb4",
+            "Ip":"10.41.82.197",
+            "FQDN":"ecs-9671eeb4.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi sm-gpu <-TAG> <winpass>"
+        },
+        "Test-sm-gpu-2":
+        {
+            "Name":"ACADCI-TEST-SM-GPU",
+            "Id":"9a48d666",
+            "Ip":"10.41.82.220",
+            "FQDN":"ecs-9a48d666.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi sm-gpu <-TAG> <winpass>"
+        },
+        "Test-sm-gpu-3":
+        {
+            "Name":"acadci-test-sm-gpu",
+            "Id":"20e5f2bd",
+            "Ip":"10.41.98.249",
+            "FQDN":"ecs-20e5f2bd.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi sm-gpu <-TAG> <winpass>"
+        },
+        "Test-la-1":
+        {
+            "Name":"ACADCI-TEST-LA",
+            "Id":"63366be3",
+            "Ip":"10.41.91.181",
+            "FQDN":"ecs-63366be3.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi la <-TAG> <winpass>"
+        },
+        "Test-la-2":
+        {
+            "Name":"ACADCI-TEST-LA",
+            "Id":"618f8fe6",
+            "Ip":"10.35.148.171",
+            "FQDN":"ecs-618f8fe6.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi la <-TAG> <winpass>"
+        },
+        "Test-la-3":
+        {
+            "Name":"ACADCI-TEST-LA",
+            "Id":"4253c81e",
+            "Ip":"10.41.95.107",
+            "FQDN":"ecs-4253c81e.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi la <-TAG> <winpass>"
+        },
+        "Test-la-4":
+        {
+            "Name":"ACADCI-TEST-LA",
+            "Id":"f3b6a996",
+            "Ip":"10.41.91.217",
+            "FQDN":"ecs-f3b6a996.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi la <-TAG> <winpass>"
+        },
+        "Test-la-5":
+        {
+            "Name":"ACADCI-TEST-LA",
+            "Id":"9fa636f9",
+            "Ip":"10.41.93.40",
+            "FQDN":"ecs-9fa636f9.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi la <-TAG> <winpass>"
+        },
+        "Test-la-6":
+        {
+            "Name":"acadci-test-la",
+            "Id":"a8f42892",
+            "Ip":"10.41.96.22",
+            "FQDN":"ecs-a8f42892.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi la <-TAG> <winpass>"
+        },
+        "Test-la-7":
+        {
+            "Name":"acadci-test-la",
+            "Id":"0d567325",
+            "Ip":"10.41.87.101",
+            "FQDN":"ecs-0d567325.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi la <-TAG> <winpass>"
+        },
+        "Test-la-8":
+        {
+            "Name":"acadci-test-la",
+            "Id":"dd80fed3",
+            "Ip":"10.41.94.212",
+            "FQDN":"ecs-dd80fed3.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test -mi la <-TAG> <winpass>"
+        },
+        "Test-la-gpu-1":
+        {
+            "Name":"ACADCI-TEST-LA-GPU",
+            "Id":"6ccd90d5",
+            "Ip":"10.41.89.102",
+            "FQDN":"ecs-6ccd90d5.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi la-gpu <-TAG> <winpass>"
+        },
+        "Test-la-gpu-2":
+        {
+            "Name":"ACADCI-TEST-LA-GPU",
+            "Id":"1e4be8fa",
+            "Ip":"10.35.235.192",
+            "FQDN":"ecs-1e4be8fa.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi la-gpu <-TAG> <winpass>"
+        },
+        "Test-la-gpu-3":
+        {
+            "Name":"ACADCI-TEST-LA-GPU",
+            "Id":"1dade533",
+            "Ip":"10.41.8.217",
+            "FQDN":"ecs-1dade533.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi la-gpu <-TAG> <winpass>"
+        },
+        "Test-la-gpu-4":
+        {
+            "Name":"ACADCI-TEST-LA-GPU",
+            "Id":"c1aa58ab",
+            "Ip":"10.41.88.135",
+            "FQDN":"ecs-c1aa58ab.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi la-gpu <-TAG> <winpass>"
+        },
+        "Test-la-gpu-5":
+        {
+            "Name":"ACADCI-TEST-LA-GPU",
+            "Id":"cfc3b74a",
+            "Ip":"10.41.94.88",
+            "FQDN":"ecs-cfc3b74a.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi la-gpu <-TAG> <winpass>"
+        },
+        "Test-la-gpu-6":
+        {
+            "Name":"ACADCI-TEST-LA-GPU",
+            "Id":"2ddede67",
+            "Ip":"10.35.235.176",
+            "FQDN":"ecs-2ddede67.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi la-gpu <-TAG> <winpass>"
+        },
+        "Test-la-gpu-7":
+        {
+            "Name":"ACADCI-TEST-LA-GPU",
+            "Id":"0e6667ec",
+            "Ip":"10.41.89.111",
+            "FQDN":"ecs-0e6667ec.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi la-gpu <-TAG> <winpass>"
+        },
+        "Test-la-gpu-8":
+        {
+            "Name":"acadci-test-la-gpu",
+            "Id":"68e28c05",
+            "Ip":"10.41.86.228",
+            "FQDN":"ecs-68e28c05.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi la-gpu <-TAG> <winpass>"
+        },
+        "Test-la-gpu-9":
+        {
+            "Name":"acadci-test-la-gpu",
+            "Id":"e59c1279",
+            "Ip":"10.41.96.144",
+            "FQDN":"ecs-e59c1279.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi la-gpu <-TAG> <winpass>"
+        },
+        "Test-la-gpu-10":
+        {
+            "Name":"acadci-test-la-gpu",
+            "Id":"82127960",
+            "Ip":"10.41.86.93",
+            "FQDN":"ecs-82127960.ecs.ads.autodesk.com",
+            "Command":"ecsmaker acadci-test-gpu -mi la-gpu <-TAG> <winpass>"
+        }
+    },
+    "DeployCommands":
+    [
+        {
+            "Instance":"nagios-server",
+            "Order":1,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MonitorRecipe> <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"droplocation1",
+            "Order":1,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <StorageRecipe>",
+            "Status":1
+        },
+        {
+            "Instance":"droplocation2",
+            "Order":1,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <StorageRecipe>",
+            "Status":1
+        },
+        {
+            "Instance":"droplocation3",
+            "Order":1,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <StorageRecipe>",
+            "Status":1
+        },
+        {
+            "Instance":"droplocation4",
+            "Order":1,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <StorageRecipe>",
+            "Status":1
+        },
+        {
+            "Instance":"droplocation5",
+            "Order":1,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <StorageRecipe>",
+            "Status":1
+        },
+        {
+            "Instance":"buildbot-master",
+            "Order":1,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MasterRecipe> <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"buildcore",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <BuildcoreRecipe> <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"inc-main-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/main\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-ob-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/B\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-ob-2",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/B\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-ob-3",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/B\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-ob-prod-x86",
+            "Order":3,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"flavor\":\"prod\",\"platform\":\"x86\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/B\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-oe-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/E\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-oh-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/H\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-od-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/D\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-of-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/F\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-og-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/G\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-ok-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/K\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-om-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/M\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-oc-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/C\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-oz-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/Z\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-ox-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/X\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-ox-prod-x86",
+            "Order":3,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"flavor\":\"prod\",\"platform\":\"x86\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/O-Branches\/X\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-FusDoc-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/Fusion360Documentation\/FusDocMain\/acad\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-NPostFCS-FB-G",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/G\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-NPostFCS-FB-P",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/P\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-NPostFCS-FB-H",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-NPostFCS-SP1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/Releases\/nautilusPostFCS\/SP1\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-N2017",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/Releases\/nautilus2017\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-macmain-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/macmain\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-MM-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/AutoCAD\/M-Branches\/M\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"inc-FusDocStage-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incbuild\"],\"root\":\"E:\/CI\",\"branches\":[\"$\/Fusion360Documentation\/FusDocStage\/acad\"]}}'",
+            "Status":1
+        },
+        {
+            "Instance":"full-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <FullBuildAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"full-2",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <FullBuildAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"full-3",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <FullBuildAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"full-4",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <FullBuildAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"full-5",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <FullBuildAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-build-100",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incmacbuild\"],\"branches\":[\"$\/AutoCAD\/macmain\", \"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/M-Branches\/M\", \"$\/AutoCAD\/O-Branches\/C\", \"$\/AutoCAD\/O-Branches\/D\", \"$\/AutoCAD\/O-Branches\/E\", \"$\/AutoCAD\/O-Branches\/F\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-build-101",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incmacbuild\"],\"branches\":[\"$\/AutoCAD\/macmain\", \"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/G\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/P\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\", \"$\/AutoCAD\/O-Branches\/X\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-build-102",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incmacbuild\"],\"branches\":[\"$\/AutoCAD\/macmain\", \"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/M-Branches\/M\", \"$\/AutoCAD\/O-Branches\/Z\", \"$\/AutoCAD\/O-Branches\/D\", \"$\/AutoCAD\/O-Branches\/E\", \"$\/AutoCAD\/O-Branches\/F\", \"$\/AutoCAD\/O-Branches\/H\", \"$\/AutoCAD\/O-Branches\/K\", \"$\/AutoCAD\/O-Branches\/G\", \"$\/AutoCAD\/O-Branches\/M\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-build-103",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"incmacbuild\"],\"branches\":[\"$\/AutoCAD\/macmain\", \"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/Fusion360Documentation\/FusDocMain\/acad\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/G\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/P\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\", \"$\/Fusion360Documentation\/FusDocStage\/acad\", \"$\/AutoCAD\/O-Branches\/X\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/SP1\", \"$\/AutoCAD\/Releases\/nautilus2017\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-001",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\",\"maclargetest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/O-Branches\/G\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\", \"$\/AutoCAD\/macmain\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-002",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\",\"maclargetest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/O-Branches\/M\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\", \"$\/AutoCAD\/macmain\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-003",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\",\"maclargetest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/Releases\/nautilus2017\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\", \"$\/AutoCAD\/macmain\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-004",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-005",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-006",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-007",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/SP1\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-008",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\"],\"branches\":[\"$\/AutoCAD\/macmain\", \"$\/AutoCAD\/main\", \"$\/AutoCAD\/M-Branches\/M\", \"$\/AutoCAD\/O-Branches\/K\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/SP1\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-009",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/C\", \"$\/AutoCAD\/O-Branches\/Z\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/O-Branches\/E\", \"$\/AutoCAD\/O-Branches\/X\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-010",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/O-Branches\/H\", \"$\/Fusion360Documentation\/FusDocMain\/acad\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/G\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/P\", \"$\/Fusion360Documentation\/FusDocStage\/acad\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-011",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\",\"maclargetest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/macmain\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-012",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/O-Branches\/H\", \"$\/Fusion360Documentation\/FusDocMain\/acad\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/G\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/P\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/SP1\", \"$\/Fusion360Documentation\/FusDocStage\/acad\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-013",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\",\"maclargetest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/O-Branches\/X\", \"$\/AutoCAD\/macmain\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mac-test-014",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MacSlaveRecipe> -j '{\"buildbot_slave\":{\"username\":\"<NodeName>\",\"builder_types\":[\"macsmalltest\",\"macmediumtest\",\"maclargetest\"],\"branches\":[\"$\/AutoCAD\/main\", \"$\/AutoCAD\/O-Branches\/B\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/FB\/H\", \"$\/AutoCAD\/Releases\/nautilusPostFCS\/SP1\", \"$\/AutoCAD\/macmain\"],\"home\":\"\/Volumes\/DATA\/ci\"}}' <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"master-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <MasterAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"master-2",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <MasterAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"master-3",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <MasterAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"master-4",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <MasterAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"master-5",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <MasterAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"mongodb-1",
+            "Order":1,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MongodbServerRecipe> <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mongodb-2",
+            "Order":1,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MongodbServerRecipe> <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"mongodb-3",
+            "Order":1,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MongodbServerRecipe> <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"admin-1",
+            "Order":2,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <AdminRecipe> <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-2",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-3",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-4",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-5",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-6",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-7",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-8",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-9",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-10",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-11",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-12",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-gpu-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-gpu-2",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-sm-gpu-3",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <SMTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-2",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-3",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-4",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-5",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-6",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-7",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-8",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-gpu-1",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-gpu-2",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-gpu-3",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-gpu-4",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-gpu-5",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-gpu-6",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-gpu-7",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-gpu-8",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-gpu-9",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"Test-la-gpu-10",
+            "Order":2,
+            "Command":"knife bootstrap windows winrm <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <SlaveRecipe> <LargeTestAttri_GPU>",
+            "Status":1
+        },
+        {
+            "Instance":"buildbot-master",
+            "Order":4,
+            "Command":"knife bootstrap <Ip> <-NodeName> <-Env> <-User> <-Pwd> <ChefClient> <MasterRecipe> <sudo>",
+            "Status":1
+        },
+        {
+            "Instance":"",
+            "Order":3,
+            "Command":"knife ssh \"os:windows AND chef_environment:<Env> AND role:buildbot_slave\" 'cmd \/C start E:\\buildbot_slave.bat' <-User> <-Pwd>",
+            "Status":1
+        },
+        {
+            "Instance":"",
+            "Order":3,
+            "Command":"knife ssh \"os:darwin AND chef_environment:<Env> AND role:buildbot_slave\" \"echo Qwertyuiop0 | sudo -S \/usr\/local\/bin\/chef-client\" <-User> <-Pwd>",
+            "Status":1
+        },
+        {
+            "Instance":"",
+            "Order":3,
+            "Command":"knife ssh \"os:darwin AND chef_environment:<Env> AND role:buildbot_slave\" \"\/Users\/administrator\/nrpe_install\/nrpe\/2.15_1\/bin\/nrpe -c \/Users\/administrator\/nrpe_install\/nrpe.cfg -d \" <-User> <-Pwd>",
+            "Status":1
+        },
+        {
+            "Instance":"",
+            "Order":4,
+            "Command":"knife ssh \"chef_environment:<Env> AND role:monitoring\" \"echo Qwertyuiop0 | sudo -S chef-client\" <-User> <-Pwd> <-NOCOLOR>",
+            "Status":1
+        }
+    ]
+}
