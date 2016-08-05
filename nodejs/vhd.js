@@ -98,15 +98,15 @@ class VHDCreateCommand extends VHDCommand {
     }
   }
 
-  can_run() {
+  can_run(callback) {
     if (this.vhd_exists()) {
-      return [false, `ERROR: VHD file already exists ${this.path}.`];
+      return callback(false, `ERROR: VHD file already exists ${this.path}.`);
     }
     else if (this.parent !=null && (!this.parent_vhd_exists())) {
-      return [false, `ERROR: parent VHD file doesn't exist ${this.parent}.`];
+      return callback(false, `ERROR: parent VHD file doesn't exist ${this.parent}.`);
     }       
     else {
-      return [true, null];
+      return callback(true, null);
     }      
   }
 
@@ -189,15 +189,15 @@ exit
 
 // Test Create
 var create_args = {
-  path: "D:\\VHDs\\acadci-002.vhd",
-  size: 1000, 
-  label: "acadci-002", 
-  mount_point: "D:\\VHD_MountPoints\\acadci002", 
+  path: "D:\\VHDs\\O_Branches_B.vhd",
+  size: 40000, 
+  label: "O_Branches_B", 
+  mount_point: "D:\\CI\\VHDs\\O_Branches-B", 
   parent: null
 };
 
-// var createCommand = new VHDCreateCommand(create_args);
-// createCommand.run();
+var createCommand = new VHDCreateCommand(create_args);
+createCommand.run();
 
 // Test Unmount
 var unmount_args = {
@@ -212,7 +212,9 @@ var unmount_args = {
 // unmountCommand.run();
 
 var cmd = `python "D:\\CI/client_tools/citools/sync_source.py" "-mount-point" "D:\\CI/build/O_Branches/B" "-changeset" "62370" "-branch" "$/AutoCAD/O-Branches/B" "-vhd-mode" "direct" "-diff-disk-path" "D:\\CI" "-tfs-username" "ads\\svc_q_tfsacadci" "-tfs-password" "9PmD6Tbw" "-project" "Fabric" "-repo-url" "http://tfs.autodesk.com:8080/tfs/AcadCollection" "-tfs-itemspec" "components develop tools" "-tfs-cloak-file" "./ci_cloakFile.json" "-scm" "tfs" "-vhd-life-time" "180"`;
-diskpart.execute(cmd, function(error, output) {
-  if (error) throw error;
-  console.log(output);
-});
+
+// var cmd2 = `python "D:\\CI/client_tools/citools/vhd_test.py"`;
+// diskpart.execute(cmd, function(error, output) {
+//   if (error) throw error;
+//   console.log(output);
+// });
