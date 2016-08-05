@@ -52,8 +52,10 @@ class VHDCommand {
       var outputArr = output.split(';');
       for(var i = 8; i < outputArr.length; i++) {
         var item = outputArr[i];
-        // console.log(i + item);
         var findIndex = item.search(regex);
+        console.log(i + item);
+        console.log(findIndex);
+        
         if(findIndex > -1) {
           return callback(true);
         }
@@ -80,14 +82,16 @@ class VHDCreateCommand extends VHDCommand {
   }
 
   cmd_template() {
-    return this.create_vdisk_cmd();
-// `select vdisk file="${this.path}"
-// attach vdisk
-// convert mbr
-// create partition primary
-// format fs=ntfs label="${this.label}" quick
-// assign mount="${this.mount_point}"
-// exit`;
+    return this.create_vdisk_cmd() +
+`
+select vdisk file="${this.path}"
+attach vdisk
+convert mbr
+create partition primary
+format fs=ntfs label="${this.label}" quick
+assign mount="${this.mount_point}"
+exit
+`;
   }
 
   create_vdisk_cmd() {
@@ -196,22 +200,22 @@ var create_args = {
   parent: null
 };
 
-var createCommand = new VHDCreateCommand(create_args);
-createCommand.run();
+// var createCommand = new VHDCreateCommand(create_args);
+// createCommand.run();
 
 // Test Unmount
 var unmount_args = {
-  path: "\\\\shacng108wmzh\\VHDs\\acadci-001.vhd", 
-  mount_point: "D:\\CI\\build\\O_Branches\\B"
+  path: "\\\\shacng108wmzh\\VHDs\\O_Branches_B.vhd", 
+  mount_point: "D:\\CI\\VHDs\\O_Branches-B"
 };
 
-// var mountCommand = new VHDMountCommand(unmount_args);
+// var mountCommand = new VHDMountCommand(create_args);
 // mountCommand.run();
 
-// var unmountCommand = new VHDUnmountCommand(unmount_args);
-// unmountCommand.run();
+var unmountCommand = new VHDUnmountCommand(create_args);
+unmountCommand.run();
 
-var cmd = `python "D:\\CI/client_tools/citools/sync_source.py" "-mount-point" "D:\\CI/build/O_Branches/B" "-changeset" "62370" "-branch" "$/AutoCAD/O-Branches/B" "-vhd-mode" "direct" "-diff-disk-path" "D:\\CI" "-tfs-username" "ads\\svc_q_tfsacadci" "-tfs-password" "9PmD6Tbw" "-project" "Fabric" "-repo-url" "http://tfs.autodesk.com:8080/tfs/AcadCollection" "-tfs-itemspec" "components develop tools" "-tfs-cloak-file" "./ci_cloakFile.json" "-scm" "tfs" "-vhd-life-time" "180"`;
+var cmd = `python "D:\\CI/client_tools/citools/sync_source.py" "-mount-point" "D:\\CI/VHDs/O_Branches-B" "-changeset" "62370" "-branch" "$/AutoCAD/O-Branches/B" "-vhd-mode" "direct" "-diff-disk-path" "D:\\CI" "-tfs-username" "ads\\wubil" "-tfs-password" "feng@007" "-project" "Fabric" "-repo-url" "http://tfs.autodesk.com:8080/tfs/AcadCollection" "-tfs-itemspec" "components develop tools" "-tfs-cloak-file" "./ci_cloakFile.json" "-scm" "tfs" "-vhd-life-time" "180"`;
 
 // var cmd2 = `python "D:\\CI/client_tools/citools/vhd_test.py"`;
 // diskpart.execute(cmd, function(error, output) {

@@ -14,7 +14,7 @@ exports.getTempScriptPath = function() {
 };
 
 exports.execute = function(command, callback) {
-  return child_process.exec(command, function(error, stdout, stderr) {
+  var child =  child_process.exec(command, {maxBuffer: 1024 * 10000}, function(error, stdout, stderr) {
     if (error != null) {
       return callback(error);
     }
@@ -22,6 +22,19 @@ exports.execute = function(command, callback) {
       return callback(new Error(stderr));
     }
     return callback(null, stdout);
+  });
+
+  child.stdout.on('data', function(data) {
+    console.log(data);
+  });
+
+  child.stderr.on('data', function(data) {
+    console.log('ERROR: ' + data);
+  });
+
+  child.on('close', function(code) {
+    console.log('closing code: ' + code);
+    // return callback(null, code);
   });
 };
 
@@ -84,7 +97,6 @@ exports.evaluate = function(input, callback) {
     }
   ], callback);
 };
-
 
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
