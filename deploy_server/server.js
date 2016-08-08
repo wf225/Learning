@@ -14,7 +14,7 @@ var server = require('http').createServer(app);
 // configuration ===============================================================
 // mongoose.connect(database.localUrl); 	// Connect to local MongoDB instance. A remoteUrl is also available (modulus.io)
 
-app.set('port', process.env.PORT || 8000);
+app.set('port', process.env.PORT || 8001);
 app.use(express.static('./public')); 	// set the static files location /public/img will be /img for users
 // app.use(morgan('dev')); // log every request to the console
 // app.use(bodyParser.urlencoded({'extended': 'true'})); // parse application/x-www-form-urlencoded

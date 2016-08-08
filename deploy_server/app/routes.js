@@ -53,13 +53,13 @@ module.exports = function (app) {
       res.send('Update the book');
     });
 
-  app.get('/distribution/instance', function (req, res) {
+  app.get('/api/distribution/instance', function (req, res) {
     deploysheet_parser.getDistributionByInstance(function(data){
       res.end( data );
     });
   });
 
-  app.get('/distribution/branch', function (req, res) {
+  app.get('/api/distribution/branch', function (req, res) {
     deploysheet_parser.getDistributionByBranch(function(data){
       res.end( data );
     });
@@ -67,7 +67,8 @@ module.exports = function (app) {
 
   // application -------------------------------------------------------------
   app.get('*', function (req, res) {
-    res.sendFile(__dirname + '/public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+    //res.sendFile(__dirname + '/public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+    res.send('Error RESTful api.');
   });
 
 };

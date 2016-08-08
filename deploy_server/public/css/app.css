@@ -1,0 +1,93 @@
+.event-catalogs-rounded-rect {
+  width:16px; 
+  height:16px; 
+  border-radius:3px
+}
+
+.btn-sm,
+.btn-group-sm > .btn {
+  padding: 3px 8px;
+  font-size: 11px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+.schedules-table > thead > tr > th,
+.schedules-table > tbody > tr > th,
+.schedules-table > tfoot > tr > th,
+.schedules-table > thead > tr > td,
+.schedules-table > tbody > tr > td,
+.schedules-table > tfoot > tr > td {
+  border: 1px solid #f4f4f4;
+  text-align: center;
+  /*width: 10%;*/
+  height: 25px;
+}
+
+.schedules-table > thead > tr > th {
+  background-color: #e4e4e4;
+}
+
+.schedules-event-catalog {
+  padding: 1px 1px;
+  font-weight: bold;
+  margin-bottom: 2px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  cursor: move;
+  text-align: center;
+  color: #fff;  
+}
+
+.schedules-event-catalog:hover, .schedules-event-item:hover {
+  box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.2);
+}
+
+.schedules-event-item {
+  padding: 1px 1px;
+  margin: 1px;
+  border-radius: 3px;
+  cursor: move;
+  color: #fff;
+  font-size: 9pt;
+}
+
+.schedules-summary-bar {
+  height: 16px;
+  position: relative;
+  float: left;
+  padding: 1px 1px;
+  margin-bottom: 0px;
+  border-radius: 0px;
+  color: #ffffff;
+}
+
+.schedules-summary-cell {
+  text-align: left;
+  font-size: 8pt;
+  color: #ffffff;
+}
+
+.schedules-summart-table {
+  width: 100%;
+}
+
+.schedules-summart-table > thead > tr > th,
+.schedules-summart-table > tbody > tr > th,
+.schedules-summart-table > tfoot > tr > th,
+.schedules-summart-table > thead > tr > td,
+.schedules-summart-table > tbody > tr > td,
+.schedules-summart-table > tfoot > tr > td {
+  border: 1px solid #f4f4f4;
+  text-align: center;
+  height: 25px;
+}
+
+.schedules-summart-table > thead > tr > th {
+  background-color: #e4e4e4;
+}
+
+.schedules-summart-table-column {
+  width: 10%;
+}
