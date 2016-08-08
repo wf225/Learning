@@ -1,53 +1,41 @@
 <!-- Content Header (Page header) -->
-<section class="content-header">
-  <h1>
-    Employees
-    <!--<small>Employees</small>-->
-  </h1>
-</section>
+<div class="content-header">
+    <h1>
+    Distribution
+    <small>order by branch</small>
+    </h1>
+    <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Distribution</li>
+    </ol>
+</div>
 
 <!-- Main content -->
-<section class="content">
+<div class="content body">
 
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header">                    
-                    <!--Search: <input ng-model="query">-->
-                    <!--Sort by:
-                    <select ng-model="orderProp">
-                        <option value="name">Alphabetical</option>
-                        <option value="age">Newest</option>
-                    </select>-->
-                    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" ng-click="beginAdd()">New</button>
-                </div><!-- /.box-header -->
+                <!--<div class="box-header">
+                    <h4>Distribution order by instance</h4>
+                </div> <!--/.box-header -->
                 <div class="box-body">
-                    <table id="dataTable" class="table-bordered table-hover table-fixed-header schedules-summart-table">
+                    <table id="dataTable" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                          <th>#</th>
-                          <th>姓名</th>
-                          <th>排序</th>
-                          <th>编辑</th>
-                          <th>删除</th>
+                            <th>Branch Name</th>
+                            <th>Instances</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="employee in employees">
+                        <tr ng-repeat="item in branchList">
                             <td>
-                              {{$index + 1}}
+                                {{item.key}}
                             </td>
                             <td>
-                                {{employee.name}}
-                            </td>
-                            <td>
-                                {{employee.sort}}
-                            </td>
-                            <td>
-                                <a type="button" class="fa fa-edit" ng-click="beginEdit(employee)"></a>
-                            </td>
-                            <td>    
-                                <a type="button" class="fa fa-trash-o" ng-click="delete(employee)"></a>
+                                <li ng-repeat="branch in item.value">
+                                    {{branch}}
+                                </li>
                             </td>
                         </tr>
                     </tbody>
@@ -55,49 +43,6 @@
                 </div><!-- /.box-body -->
             </div><!-- /.box -->            
         </div><!-- /.col -->
-    </div><!-- /.row -->
+    </div><!-- /.row -->  
     
-    <div class="modal" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">Add Employee</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                          <label for="recipient-name" class="control-label">Employee Name:</label>
-                          <input type="text" class="form-control" id="recipient-name" ng-model="activeItem.name">
-                      </div>
-                    </div><!-- /.col -->
-                    <div class="col-md-6">
-                      <div class="form-group">
-                          <label for="recipient-name" class="control-label">Sort:</label>
-                          <input type="text" class="form-control" id="recipient-name" ng-model="activeItem.sort">
-                      </div>
-                    </div><!-- /.col -->
-                  </div><!-- /.row -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" ng-click="commit(activeItem)">OK</button>
-                </div>
-            </div>
-        </div>
-    </div> <!-- /.modal_edit -->
-    
-</section><!-- /.content -->
-
-
-<!-- page script -->
-<script type="text/javascript">
-
-    $(function () {
-
-        $('.table-fixed-header').fixedHeader();
-
-    });
-  
-</script>
+</div><!-- /.content -->

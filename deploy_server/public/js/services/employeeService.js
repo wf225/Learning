@@ -7,12 +7,12 @@ define([
     var EmployeeService = function(){};
     
     // Static methods.
-    EmployeeService.getAll = function($http, dep_id, callback) {
+    EmployeeService.getAll = function($http, callback) {
         if (typeof (callback) !== 'function') {
             throw new Error('Argument \'callback\' is not a function.');
         }
 
-        $http.get( 'api/employees/' + dep_id ).success( function(data) {
+        $http.get( 'api/distribution/branch' ).success( function(data) {
            callback(data);
         });
     };

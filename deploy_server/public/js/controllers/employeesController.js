@@ -13,13 +13,13 @@ define([
         }
              
         // init
-        $scope.activeItem = {};
-        $scope.employees = {};
-        $scope.orderProp = 'name';
+        // $scope.activeItem = {};
+        // $scope.employees = {};
+        // $scope.orderProp = 'name';
         
         // getAll by dep_id
-        EmployeeService.getAll($http, $scope.auth.dep_id, function(data) {
-            $scope.employees = data;
+        EmployeeService.getAll($http, function(data) {
+            $scope.branchList = data;
         });
         
         // beginAdd
