@@ -1,0 +1,3 @@
+python "D:\\CI/client_tools/citools/sync_source.py" "-mount-point" "D:\\CI/build/O_Branches/B" "-changeset" "62370" "-branch" "$/AutoCAD/O-Branches/B" "-vhd-mode" "differential" "-diff-disk-path" "D:\\CI\DiffVHD\" "-tfs-username" "ads\\svc_q_tfsacadci" "-tfs-password" "9PmD6Tbw" "-project" "Fabric" "-repo-url" "http://tfs.autodesk.com:8080/tfs/AcadCollection" "-tfs-itemspec" "components develop tools" "-tfs-cloak-file" "./ci_cloakFile.json" "-scm" "tfs" "-vhd-life-time" "180"
+
+tf workspace -delete -collection:http://tfs.autodesk.com:8080/tfs/AcadCollection CI_SHA3ZQ6S12;svc_q_tfsacadci -login:svc_q_tfsacadci,9PmD6Tbw

@@ -1,6 +1,5 @@
 'use strict';
 
- //'services/serviceRegistry'
 define([
 
 ], function () {

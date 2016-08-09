@@ -3,12 +3,12 @@
 define([
     'mainApp'
     , 'controllers/dashboardController'
-    , 'controllers/groupsController'
-    , 'controllers/employeesController'
+    , 'controllers/deploysheetController'
+    , 'controllers/cookbookController'
 ], function ( mainApp
              , DashboardController
-             , GroupsController
-             , EmployeesController)
+             , DeploysheetController
+             , CookbookController)
     {
         var controllers = function () {
             
@@ -17,14 +17,14 @@ define([
                     var controller = new DashboardController($scope, $http, $timeout, $location, mainApp);
             }]);
             
-            mainApp.controller('GroupsController', ['$scope', '$http', '$timeout', '$location', 'LocalStorageService',
+            mainApp.controller('DeploysheetController', ['$scope', '$http', '$timeout', '$location', 'LocalStorageService',
                 function ($scope, $http, $timeout, $location, localStorage) {                   
-                    var controller = new GroupsController($scope, $http, $timeout, $location, mainApp);
+                    var controller = new DeploysheetController($scope, $http, $timeout, $location, mainApp);
             }]);            
             
-            mainApp.controller('EmployeesController', ['$scope', '$http', '$timeout', '$location', 'LocalStorageService',
+            mainApp.controller('CookbookController', ['$scope', '$http', '$timeout', '$location', 'LocalStorageService',
                 function ($scope, $http, $timeout, $location, localStorage) {                   
-                    var controller = new EmployeesController($scope, $http, $timeout, $location, mainApp);
+                    var controller = new CookbookController($scope, $http, $timeout, $location, mainApp);
             }]);
         }
         

@@ -10,13 +10,13 @@ define([
                 templateUrl: 'views/dashboard.html',
                 controller: 'DashboardController'
             })
-            .when('/groups', {
-                templateUrl: 'views/groups.html',
-                controller: 'GroupsController'
+            .when('/deploysheet', {
+                templateUrl: 'views/deploysheet.html',
+                controller: 'DeploysheetController'
             })
-            .when('/employees', {
-                templateUrl: 'views/employees.html',
-                controller: 'EmployeesController'
+            .when('/cookbook', {
+                templateUrl: 'views/cookbook.html',
+                controller: 'CookbookController'
             })
             .otherwise({
                 //redirectTo: '/dashboard'

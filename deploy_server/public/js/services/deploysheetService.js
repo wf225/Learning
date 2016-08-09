@@ -4,18 +4,18 @@ define([
     
 ], function () {
     
-    var GroupService = function(){};
+    var DeploysheetService = function(){};
     
     // Static method.
-    GroupService.getAll = function($http, callback) {
+    DeploysheetService.getAll = function($http, callback) {
         if (typeof (callback) !== 'function') {
             throw new Error('Argument \'callback\' is not a function.');
         }
         
-        $http.get( 'api/distribution/instance' ).success( function(data) {
+        $http.get( 'api/deploysheet/instance' ).success( function(data) {
            callback(data);
         });
     };
     
-    return GroupService;
+    return DeploysheetService;
 });

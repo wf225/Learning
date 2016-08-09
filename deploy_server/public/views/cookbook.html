@@ -1,12 +1,12 @@
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <h1>
-    Distribution
-    <small>order by instance</small>
+    Deploysheet
+    <small>order by branch</small>
     </h1>
     <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Distribution</li>
+    <li class="active">Deploysheet</li>
     </ol>
 </div>
 
@@ -23,12 +23,12 @@
                     <table id="dataTable" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Instance Name</th>
-                            <th>Branches</th>
+                            <th>Branch Name</th>
+                            <th>Instances</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in instanceList">
+                        <tr ng-repeat="item in branchList">
                             <td>
                                 {{item.key}}
                             </td>

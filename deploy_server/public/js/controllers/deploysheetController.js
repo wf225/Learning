@@ -1,10 +1,10 @@
 'use strict';
 
 define([
-    'services/groupService'
-], function (GroupService) {
+    'services/deploysheetService'
+], function (DeploysheetService) {
 
-    function GroupsController($scope, $http, $timeout, $location ) {
+    function DeploysheetController($scope, $http, $timeout, $location ) {
         if (!$scope) {
             throw new Error('Argument $scope is invalid.');
         }
@@ -12,12 +12,11 @@ define([
             throw new Error('Argument $http is invalid.');
         }
         
-        // getAll by dep_id
-        GroupService.getAll($http, function(data) {
+        DeploysheetService.getAll($http, function(data) {
             $scope.instanceList = data;
         });
   
     }
     
-    return GroupsController;
+    return DeploysheetController;
 });

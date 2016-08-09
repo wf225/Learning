@@ -1,10 +1,10 @@
 'use strict';
 
 define([
-    'services/employeeService'
-], function (EmployeeService) {
+    'services/cookbookService'
+], function (CookbookService) {
 
-    function EmployeesController($scope, $http, $timeout, $location ) {
+    function CookbookController($scope, $http, $timeout, $location ) {
         if (!$scope) {
             throw new Error('Argument $scope is invalid.');
         }
@@ -14,11 +14,11 @@ define([
              
         // init
         // $scope.activeItem = {};
-        // $scope.employees = {};
+        // $scope.cookbooks = {};
         // $scope.orderProp = 'name';
         
         // getAll by dep_id
-        EmployeeService.getAll($http, function(data) {
+        CookbookService.getAll($http, function(data) {
             $scope.branchList = data;
         });
         
@@ -38,16 +38,16 @@ define([
         $scope.commit = function(item) {
             if(item.id) {
                 // commitEdit
-                EmployeeService.update($http, item, function(data) {
+                CookbookService.update($http, item, function(data) {
                     console.log('commitEdit:' + data.result);
                 });
             }
             else {
                 // commitAdd               
                 item.dep_id = $scope.auth.dep_id;
-                EmployeeService.add($http, item, function(data) {
+                CookbookService.add($http, item, function(data) {
                     console.log('commitAdd:' + data.id);
-                    $scope.employees.push(data);
+                    $scope.cookbooks.push(data);
                 });
             }
             
@@ -56,12 +56,12 @@ define([
         
         // delete
         $scope.delete = function(item) {
-            var deletePos = $.inArray(item, $scope.employees);
+            var deletePos = $.inArray(item, $scope.cookbooks);
             if(deletePos > -1) {
-                EmployeeService.delete($http, item.id, function(data) {
+                CookbookService.delete($http, item.id, function(data) {
                     console.log('delete:' + data.result);
                     if(data.result) {
-                        $scope.employees.splice(deletePos, 1);
+                        $scope.cookbooks.splice(deletePos, 1);
                     }
                 });
             } 
@@ -69,5 +69,5 @@ define([
   
     }
     
-    return EmployeesController;
+    return CookbookController;
 });

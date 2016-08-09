@@ -4,48 +4,48 @@ define([
     
 ], function () {
 
-    var EmployeeService = function(){};
+    var CookbookService = function(){};
     
     // Static methods.
-    EmployeeService.getAll = function($http, callback) {
+    CookbookService.getAll = function($http, callback) {
         if (typeof (callback) !== 'function') {
             throw new Error('Argument \'callback\' is not a function.');
         }
 
-        $http.get( 'api/distribution/branch' ).success( function(data) {
+        $http.get( 'api/deploysheet/branch' ).success( function(data) {
            callback(data);
         });
     };
     
-    EmployeeService.add = function($http, item, callback) {
+    CookbookService.add = function($http, item, callback) {
         if (typeof (callback) !== 'function') {
             throw new Error('Argument \'callback\' is not a function.');
         }
         
-        $http.post( 'api/employees', item ).success( function(data) {
+        $http.post( 'api/deploysheet', item ).success( function(data) {
            callback(data);
         });
     };
     
-    EmployeeService.update = function($http, item, callback) {
+    CookbookService.update = function($http, item, callback) {
         if (typeof (callback) !== 'function') {
             throw new Error('Argument \'callback\' is not a function.');
         }
         
-        $http.put( 'api/employees', item ).success( function(data) {
+        $http.put( 'api/deploysheet', item ).success( function(data) {
            callback(data);
         });
     };
     
-    EmployeeService.delete = function($http, id, callback) {
+    CookbookService.delete = function($http, id, callback) {
         if (typeof (callback) !== 'function') {
             throw new Error('Argument \'callback\' is not a function.');
         }
         
-        $http.delete( 'api/employees/' + id ).success( function(data) {
+        $http.delete( 'api/deploysheet/' + id ).success( function(data) {
            callback(data);
         });
     };
     
-    return EmployeeService;
+    return CookbookService;
 });
