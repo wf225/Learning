@@ -2,7 +2,6 @@ var fs = require('fs');
 var util = require('util');
 var diskpart = require('./diskpart_helper.js');
 
-
 class VHDCommand {
   constructor(args) {
     this.args = args;
@@ -16,7 +15,6 @@ class VHDCommand {
   }
 
   run() {
-    // var [res, err] = this.can_run();
     var _this = this;
     this.can_run(function(res, err) {
       if (res) {
@@ -212,13 +210,12 @@ var unmount_args = {
 // var mountCommand = new VHDMountCommand(create_args);
 // mountCommand.run();
 
-var unmountCommand = new VHDUnmountCommand(create_args);
-unmountCommand.run();
+// var unmountCommand = new VHDUnmountCommand(create_args);
+// unmountCommand.run();
 
 var cmd = `python "D:\\CI/client_tools/citools/sync_source.py" "-mount-point" "D:\\CI/VHDs/O_Branches-B" "-changeset" "62370" "-branch" "$/AutoCAD/O-Branches/B" "-vhd-mode" "direct" "-diff-disk-path" "D:\\CI" "-tfs-username" "ads\\wubil" "-tfs-password" "feng@007" "-project" "Fabric" "-repo-url" "http://tfs.autodesk.com:8080/tfs/AcadCollection" "-tfs-itemspec" "components develop tools" "-tfs-cloak-file" "./ci_cloakFile.json" "-scm" "tfs" "-vhd-life-time" "180"`;
 
-// var cmd2 = `python "D:\\CI/client_tools/citools/vhd_test.py"`;
-// diskpart.execute(cmd, function(error, output) {
-//   if (error) throw error;
-//   console.log(output);
-// });
+diskpart.execute(cmd, function(error, output) {
+  if (error) throw error;
+  console.log(output);
+});

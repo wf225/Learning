@@ -1,10 +1,10 @@
 var os = require("os");
 var fs = require('fs');
-var child_process = require('child_process');
 var _ = require('lodash');
 var path = require('path');
 var fsPlus = require('fs-plus');
 var async = require('async');
+var child_process = require('child_process');
 
 exports.getTempScriptPath = function() {
   var currentTime, tempDirectory;
@@ -14,7 +14,7 @@ exports.getTempScriptPath = function() {
 };
 
 exports.execute = function(command, callback) {
-  var child =  child_process.exec(command, {maxBuffer: 1024 * 10000}, function(error, stdout, stderr) {
+  var child =  child_process.exec(command, {maxBuffer: 1000000000}, function(error, stdout, stderr) {
     if (error != null) {
       return callback(error);
     }
@@ -30,10 +30,11 @@ exports.execute = function(command, callback) {
 
   child.stderr.on('data', function(data) {
     console.log('ERROR: ' + data);
+    return callback(null, data);
   });
 
   child.on('close', function(code) {
-    console.log('closing code: ' + code);
+    // console.log('closing code: ' + code);
     // return callback(null, code);
   });
 };
